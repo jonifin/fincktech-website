@@ -382,8 +382,21 @@
             <button class="btn btn-secondary" onclick="exportToCSV()">📥 Export to CSV</button>
         </div>
     </div>
+
+    <script src="config.js"></script>
     
-    <script>
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = window.FIREBASE_CONFIG;
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
         const basePath = '/build/fincktri/';
 
         const trainingPlan = [
@@ -683,24 +696,79 @@
                 week4FTP: document.getElementById('week4FTP').value,
                 week12FTP: document.getElementById('week12FTP').value
             };
-            localStorage.setItem('ftpTrainingProgress', JSON.stringify(data));
+            
+            // Save to Firebase
+            const progressRef = ref(database, 'fincktri/trainingProgress');
+            set(progressRef, data)
+                .then(() => {
+                    console.log('Progress saved to Firebase successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving to Firebase:', error);
+                    // Fallback to localStorage if Firebase fails
+                    localStorage.setItem('ftpTrainingProgress', JSON.stringify(data));
+                });
         }
 
         function loadProgress() {
-            const saved = localStorage.getItem('ftpTrainingProgress');
-            if (saved) {
-                const data = JSON.parse(saved);
-                workoutData = data.workouts || {};
-                document.getElementById('startFTP').value = data.startFTP || '';
-                document.getElementById('week4FTP').value = data.week4FTP || '';
-                document.getElementById('week12FTP').value = data.week12FTP || '';
-                updateFTPStats();
-            }
+            // Load from Firebase
+            const progressRef = ref(database, 'fincktri/trainingProgress');
+            get(progressRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        workoutData = data.workouts || {};
+                        document.getElementById('startFTP').value = data.startFTP || '';
+                        document.getElementById('week4FTP').value = data.week4FTP || '';
+                        document.getElementById('week12FTP').value = data.week12FTP || '';
+                        updateFTPStats();
+                        console.log('Progress loaded from Firebase successfully');
+                    } else {
+                        // Try to load from localStorage as fallback
+                        const saved = localStorage.getItem('ftpTrainingProgress');
+                        if (saved) {
+                            const data = JSON.parse(saved);
+                            workoutData = data.workouts || {};
+                            document.getElementById('startFTP').value = data.startFTP || '';
+                            document.getElementById('week4FTP').value = data.week4FTP || '';
+                            document.getElementById('week12FTP').value = data.week12FTP || '';
+                            updateFTPStats();
+                            // Save to Firebase for future use
+                            saveProgress();
+                            console.log('Progress loaded from localStorage and migrated to Firebase');
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading from Firebase:', error);
+                    // Fallback to localStorage if Firebase fails
+                    const saved = localStorage.getItem('ftpTrainingProgress');
+                    if (saved) {
+                        const data = JSON.parse(saved);
+                        workoutData = data.workouts || {};
+                        document.getElementById('startFTP').value = data.startFTP || '';
+                        document.getElementById('week4FTP').value = data.week4FTP || '';
+                        document.getElementById('week12FTP').value = data.week12FTP || '';
+                        updateFTPStats();
+                    }
+                });
         }
 
         function resetProgress() {
             if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                // Clear Firebase data
+                const progressRef = ref(database, 'fincktri/trainingProgress');
+                set(progressRef, null)
+                    .then(() => {
+                        console.log('Progress cleared from Firebase successfully');
+                    })
+                    .catch((error) => {
+                        console.error('Error clearing Firebase data:', error);
+                    });
+                
+                // Also clear localStorage
                 localStorage.removeItem('ftpTrainingProgress');
+                
                 workoutData = {};
                 document.getElementById('startFTP').value = '';
                 document.getElementById('week4FTP').value = '';
@@ -709,6 +777,11 @@
                 updateStats();
             }
         }
+        
+        // Make functions available globally
+        window.saveProgress = saveProgress;
+        window.resetProgress = resetProgress;
+        window.exportToCSV = exportToCSV;
 
         function exportToCSV() {
             let csv = 'Week,Day,Workout,Details,Completed,Notes\n';
@@ -732,6 +805,12 @@
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
         }
+        
+        // Make more functions globally available for inline event handlers
+        window.updateFTPStats = updateFTPStats;
+        window.toggleWeek = toggleWeek;
+        window.toggleWorkout = toggleWorkout;
+        window.updateNotes = updateNotes;
 
         initializeTracker();
     </script>
