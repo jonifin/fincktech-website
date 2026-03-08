@@ -579,7 +579,95 @@
   }
   .rsvp-saved-banner.show { display: block; }
 
-  /* ===== TRAVEL TIPS ===== */
+  /* ===== QUIZ ===== */
+  .quiz-section {
+    background: linear-gradient(135deg, rgba(181,201,177,0.2), rgba(247,197,208,0.2));
+    border-radius: 28px;
+    padding: 36px 32px;
+    margin: 20px 0;
+    border: 2px solid rgba(181,201,177,0.4);
+    box-shadow: 0 8px 32px rgba(181,201,177,0.1);
+  }
+  .quiz-intro {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .quiz-question {
+    background: rgba(255,255,255,0.75);
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    border: 1.5px solid rgba(247,197,208,0.4);
+  }
+  .quiz-q-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .quiz-q-num { color: var(--rose); margin-right: 6px; }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(247,197,208,0.4);
+    background: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    text-align: left;
+  }
+  .quiz-option:hover { border-color: var(--rose); background: var(--petal); }
+  .quiz-option.selected { border-color: var(--rose); background: linear-gradient(135deg, var(--petal), rgba(255,255,255,0.9)); }
+  .quiz-option.correct  { border-color: #7dbf95; background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #2d6a4f; }
+  .quiz-option.wrong    { border-color: #e88a9a; background: linear-gradient(135deg, #fde8ee, #fbd0dc); color: #8b2a3a; }
+  .quiz-option-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--blush);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .quiz-option.selected .quiz-option-dot { background: var(--rose); border-color: var(--rose); }
+  .quiz-option.correct  .quiz-option-dot { background: #7dbf95; border-color: #7dbf95; }
+  .quiz-option.wrong    .quiz-option-dot { background: #e88a9a; border-color: #e88a9a; }
+  .quiz-result-bar {
+    text-align: center;
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.8);
+    border: 2px solid rgba(247,197,208,0.4);
+    display: none;
+  }
+  .quiz-result-bar.show { display: block; }
+  .quiz-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--rose);
+  }
+  .quiz-score-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ===== TRAVEL SECTION ===== */
   .travel-section {
     background: rgba(255,255,255,0.65);
     backdrop-filter: blur(10px);
@@ -715,11 +803,15 @@
       <div class="card-title" data-en="Christening" data-lt="Krikštynos" data-fi="Kaste">Christening</div>
       <div class="card-detail">
         <strong data-en="Date" data-lt="Data" data-fi="Päivämäärä">Date</strong><br>
-        <span data-en="📅 Date to be announced" data-lt="📅 Data bus paskelbta" data-fi="📅 Päivämäärä ilmoitetaan">📅 Date to be announced</span><br><br>
+        <span data-en="📅 Friday, 23 May 2026" data-lt="📅 2026 m. gegužės 23 d., penktadienis" data-fi="📅 Perjantai 23. toukokuuta 2026">📅 Friday, 23 May 2026</span><br><br>
         <strong data-en="Time" data-lt="Laikas" data-fi="Aika">Time</strong><br>
-        <span data-en="🕐 Time to be announced" data-lt="🕐 Laikas bus paskelbtas" data-fi="🕐 Aika ilmoitetaan">🕐 Time to be announced</span><br><br>
+        <span data-en="🕐 14:00 EET" data-lt="🕐 14:00 EET" data-fi="🕐 14:00 EET">🕐 14:00 EET</span><br><br>
         <strong data-en="Venue" data-lt="Vieta" data-fi="Paikka">Venue</strong><br>
-        <span data-en="📍 Church, Vilnius, Lithuania" data-lt="📍 Bažnyčia, Vilnius" data-fi="📍 Kirkko, Vilnius, Liettua">📍 Church, Vilnius, Lithuania</span>
+        <a href="https://share.google/eedYjDJ8btEJjXB7C" target="_blank" style="color:var(--rose); font-weight:700; text-decoration:none;">
+          📍 Bernardinų bažnyčia<br>
+          <span style="font-weight:400; font-size:0.82rem; color:var(--text-light);">Vilniaus šv. Pranciškaus Asyžiečio</span>
+        </a><br>
+        <a href="https://www.bernardinuparapija.lt/" target="_blank" style="color:var(--gold); font-size:0.78rem; font-weight:600; text-decoration:none;">🌐 bernardinuparapija.lt →</a>
       </div>
     </div>
     <div class="card">
@@ -727,11 +819,11 @@
       <div class="card-title" data-en="Birthday Party" data-lt="Gimtadienio šventė" data-fi="Syntymäpäiväjuhlat">Birthday Party</div>
       <div class="card-detail">
         <strong data-en="Date" data-lt="Data" data-fi="Päivämäärä">Date</strong><br>
-        <span data-en="📅 Date to be announced" data-lt="📅 Data bus paskelbta" data-fi="📅 Päivämäärä ilmoitetaan">📅 Date to be announced</span><br><br>
+        <span data-en="📅 Friday, 23 May 2026" data-lt="📅 2026 m. gegužės 23 d., penktadienis" data-fi="📅 Perjantai 23. toukokuuta 2026">📅 Friday, 23 May 2026</span><br><br>
         <strong data-en="Time" data-lt="Laikas" data-fi="Aika">Time</strong><br>
-        <span data-en="🕐 Time to be announced" data-lt="🕐 Laikas bus paskelbtas" data-fi="🕐 Aika ilmoitetaan">🕐 Time to be announced</span><br><br>
+        <span data-en="🕐 16:00 EET" data-lt="🕐 16:00 EET" data-fi="🕐 16:00 EET">🕐 16:00 EET</span><br><br>
         <strong data-en="Venue" data-lt="Vieta" data-fi="Paikka">Venue</strong><br>
-        <span data-en="📍 Venue, Vilnius, Lithuania" data-lt="📍 Vieta, Vilnius" data-fi="📍 Juhlapaikka, Vilnius, Liettua">📍 Venue, Vilnius, Lithuania</span>
+        <span style="color:var(--text-light); font-style:italic; font-size:0.85rem;" data-en="📍 Venue to be announced" data-lt="📍 Vieta bus paskelbta" data-fi="📍 Paikka ilmoitetaan pian">📍 Venue to be announced</span>
       </div>
     </div>
   </div>
@@ -746,31 +838,9 @@
           <div class="timeline-line"></div>
         </div>
         <div class="timeline-content">
-          <div class="timeline-time" data-en="Morning · TBA" data-lt="Rytas · TBA" data-fi="Aamu · TBA">Morning · TBA</div>
+          <div class="timeline-time" data-en="14:00 EET" data-lt="14:00 EET" data-fi="14:00 EET">14:00 EET</div>
           <div class="timeline-label" data-en="Christening Ceremony" data-lt="Krikštyno ceremonija" data-fi="Kastetilaisuus">Christening Ceremony</div>
-          <div class="timeline-desc" data-en="Holy Mass & Baptism at the church" data-lt="Šv. Mišios ir krikštas bažnyčioje" data-fi="Kaste-seremonia kirkossa">Holy Mass & Baptism at the church</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-left">
-          <div class="timeline-dot">🥂</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="timeline-content">
-          <div class="timeline-time" data-en="Midday · TBA" data-lt="Pietūs · TBA" data-fi="Keskipäivä · TBA">Midday · TBA</div>
-          <div class="timeline-label" data-en="Welcome Reception" data-lt="Svečių priėmimas" data-fi="Tervetuliaistilaisuus">Welcome Reception</div>
-          <div class="timeline-desc" data-en="Drinks & welcome snacks at the venue" data-lt="Gėrimai ir užkandžiai" data-fi="Juomat ja välipalat juhlapaikalla">Drinks & welcome snacks at the venue</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-left">
-          <div class="timeline-dot">🍽️</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div class="timeline-content">
-          <div class="timeline-time" data-en="Afternoon · TBA" data-lt="Popietė · TBA" data-fi="Iltapäivä · TBA">Afternoon · TBA</div>
-          <div class="timeline-label" data-en="Festive Lunch & Dinner" data-lt="Šventiniai pietūs ir vakarienė" data-fi="Juhla-ateria">Festive Lunch & Dinner</div>
-          <div class="timeline-desc" data-en="Celebrating together with family" data-lt="Švenčiame kartu su šeima" data-fi="Juhlimme yhdessä perheen kanssa">Celebrating together with family</div>
+          <div class="timeline-desc" data-en="Holy Mass & Baptism at Bernardinų Church (St. Francis of Assisi), Vilnius Old Town" data-lt="Šv. Mišios ir krikštas Bernardinų bažnyčioje, Vilniaus senamiestis" data-fi="Kaste-seremonia Bernardinų kirkossa (Pyhä Franciscus Assisilainen), Vilnan vanhakaupunki">Holy Mass & Baptism at Bernardinų Church (St. Francis of Assisi), Vilnius Old Town</div>
         </div>
       </div>
       <div class="timeline-item">
@@ -779,24 +849,21 @@
           <div class="timeline-line"></div>
         </div>
         <div class="timeline-content">
-          <div class="timeline-time" data-en="Evening · TBA" data-lt="Vakaras · TBA" data-fi="Ilta · TBA">Evening · TBA</div>
-          <div class="timeline-label" data-en="Birthday Cake & Celebrations!" data-lt="Gimtadienio tortas ir šventė!" data-fi="Syntymäpäiväkakku ja juhlat!">Birthday Cake & Celebrations!</div>
-          <div class="timeline-desc" data-en="Cutting the cake & first birthday photos" data-lt="Torto pjaustymas ir nuotraukos" data-fi="Kakun leikkaus ja syntymäpäiväkuvat">Cutting the cake & first birthday photos</div>
+          <div class="timeline-time" data-en="16:00 EET" data-lt="16:00 EET" data-fi="16:00 EET">16:00 EET</div>
+          <div class="timeline-label" data-en="Birthday Party 🎉" data-lt="Gimtadienio šventė 🎉" data-fi="Syntymäpäiväjuhlat 🎉">Birthday Party 🎉</div>
+          <div class="timeline-desc" data-en="Celebrating Magdalena Julija's first year — cake, joy & family!" data-lt="Švenčiame Magdalenos Julijos pirmąjį gimtadienį — tortas, džiaugsmas ir šeima!" data-fi="Juhlimme Magdalena Julijan ensimmäistä vuotta — kakku, ilo ja perhe!">Celebrating Magdalena Julija's first year — cake, joy & family!</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- MAP -->
-  <div class="map-section">
-    <!-- Replace this placeholder div with a Google Maps iframe:
-         <iframe src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-    -->
-    <div class="map-placeholder">
-      <div class="map-icon">🗺️</div>
-      <div>
-        <strong data-en="Vilnius, Lithuania" data-lt="Vilnius, Lietuva" data-fi="Vilna, Liettua">Vilnius, Lithuania</strong><br>
-        <span style="font-size:0.8rem; opacity:0.7;" data-en="Venue address will be added here" data-lt="Vietos adresas bus pridėtas" data-fi="Juhlapaikan osoite lisätään tähän">Venue address will be added here</span>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-dot">🌆</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-time" data-en="Evening" data-lt="Vakaras" data-fi="Ilta">Evening</div>
+          <div class="timeline-label" data-en="Family Time in Vilnius" data-lt="Šeimos laikas Vilniuje" data-fi="Perheaika Vilnassa">Family Time in Vilnius</div>
+          <div class="timeline-desc" data-en="Explore the beautiful Old Town together — a stroll through cobblestone streets, perhaps a cosy dinner to end the day 🍷" data-lt="Kartu tyrinėkite gražų senamiestį — pasivaikščiojimas akmenimis grįstomis gatvėmis ir galbūt jaukūs vakariniai pietūs 🍷" data-fi="Tutkikaa yhdessä kaunista vanhaa kaupunkia — kävely kivikaduilla ja ehkä mukava illallinen päivän päätteeksi 🍷">Explore the beautiful Old Town together — a stroll through cobblestone streets, perhaps a cosy dinner to end the day 🍷</div>
+        </div>
       </div>
     </div>
   </div>
@@ -821,7 +888,7 @@
       <div class="gate-error" id="gateError" data-en="Name not found. Please check your name or contact us." data-lt="Vardas nerastas. Patikrinkite vardą arba susisiekite su mumis." data-fi="Nimeä ei löydy. Tarkista nimesi tai ota yhteyttä.">Name not found. Please check your name or contact us.</div>
     </div>
 
-    <!-- RSVP Form (unlocked) -->
+    <!-- RSVP Form + Quiz (unlocked together) -->
     <div class="rsvp-form" id="rsvpForm">
       <div class="rsvp-welcome" id="rsvpWelcome">Welcome! 🌸</div>
       <p class="rsvp-note" data-en="Please fill in the form below. Your response is private — only you can see your own answers."
@@ -882,19 +949,105 @@
             placeholder="Write your warm wishes here..."></textarea>
         </div>
 
-        <div class="rsvp-submit-wrap">
-          <button class="btn-submit" id="rsvpSubmitBtn" onclick="submitRSVP()"
-            data-en="Send my RSVP 🌸" data-lt="Siųsti RSVP 🌸" data-fi="Lähetä RSVP 🌸">
-            Send my RSVP 🌸
-          </button>
-          <div class="rsvp-status" id="rsvpStatus"></div>
+      </div>
+
+      <!-- Divider between RSVP fields and quiz -->
+      <div class="divider" style="margin: 28px 0 20px; font-size:1rem; letter-spacing:8px;">✦ ✦ ✦</div>
+
+      <!-- Quiz -->
+      <div id="quizSection">
+        <div class="section-title" style="margin-bottom:12px;" data-en="Baby <span>Quiz</span> 🌸" data-lt="Kūdikio <span>viktorina</span> 🌸" data-fi="Vauva<span>tietovisa</span> 🌸">Baby <span>Quiz</span> 🌸</div>
+        <p class="quiz-intro" data-en="How well do you know little Magdalena Julija? Answer all 3 questions — your score will be saved with your RSVP!"
+           data-lt="Kaip gerai pažįstate mažąją Magdaleną Juliją? Atsakykite į 3 klausimus — jūsų rezultatas bus išsaugotas!"
+           data-fi="Kuinka hyvin tunnet pienen Magdalena Julijan? Vastaa kaikkiin 3 kysymykseen — tuloksesi tallennetaan!">
+          How well do you know little Magdalena Julija? Answer all 3 questions — your score will be saved with your RSVP!
+        </p>
+
+        <!-- Q1: Birthday -->
+        <div class="quiz-question" id="qq1">
+          <div class="quiz-q-text">
+            <span class="quiz-q-num">1.</span>
+            <span data-en="When is Magdalena Julija's birthday?" data-lt="Kada Magdalenos Julijos gimtadienis?" data-fi="Milloin on Magdalena Julijan syntymäpäivä?">When is Magdalena Julija's birthday?</span>
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-option" onclick="selectQuiz(1,'a')" id="q1a">
+              <div class="quiz-option-dot"></div><span data-en="14 April 2025" data-lt="2025 m. balandžio 14 d." data-fi="14. huhtikuuta 2025">14 April 2025</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(1,'b')" id="q1b">
+              <div class="quiz-option-dot"></div><span data-en="21 May 2025" data-lt="2025 m. gegužės 21 d." data-fi="21. toukokuuta 2025">21 May 2025</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(1,'c')" id="q1c">
+              <div class="quiz-option-dot"></div><span data-en="3 June 2025" data-lt="2025 m. birželio 3 d." data-fi="3. kesäkuuta 2025">3 June 2025</span>
+            </button>
+          </div>
         </div>
 
+        <!-- Q2: Birth weight -->
+        <div class="quiz-question" id="qq2">
+          <div class="quiz-q-text">
+            <span class="quiz-q-num">2.</span>
+            <span data-en="What was Magdalena Julija's birth weight?" data-lt="Koks buvo Magdalenos Julijos gimimo svoris?" data-fi="Mikä oli Magdalena Julijan syntymäpaino?">What was Magdalena Julija's birth weight?</span>
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-option" onclick="selectQuiz(2,'a')" id="q2a">
+              <div class="quiz-option-dot"></div><span>2 850 g</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(2,'b')" id="q2b">
+              <div class="quiz-option-dot"></div><span>3 200 g</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(2,'c')" id="q2c">
+              <div class="quiz-option-dot"></div><span>3 550 g</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Q3: Birth height -->
+        <div class="quiz-question" id="qq3">
+          <div class="quiz-q-text">
+            <span class="quiz-q-num">3.</span>
+            <span data-en="What was Magdalena Julija's birth height?" data-lt="Koks buvo Magdalenos Julijos gimimo ūgis?" data-fi="Mikä oli Magdalena Julijan syntymäpituus?">What was Magdalena Julija's birth height?</span>
+          </div>
+          <div class="quiz-options">
+            <button class="quiz-option" onclick="selectQuiz(3,'a')" id="q3a">
+              <div class="quiz-option-dot"></div><span>48 cm</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(3,'b')" id="q3b">
+              <div class="quiz-option-dot"></div><span>51 cm</span>
+            </button>
+            <button class="quiz-option" onclick="selectQuiz(3,'c')" id="q3c">
+              <div class="quiz-option-dot"></div><span>54 cm</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Result -->
+        <div class="quiz-result-bar" id="quizResult">
+          <div class="quiz-score" id="quizScore">0/3</div>
+          <div class="quiz-score-text" id="quizScoreText"></div>
+        </div>
       </div>
-    </div>
+
+      <!-- Submit button — after quiz -->
+      <div class="rsvp-submit-wrap" style="margin-top: 28px;">
+        <button class="btn-submit" id="rsvpSubmitBtn" onclick="submitRSVP()"
+          data-en="Send my RSVP 🌸" data-lt="Siųsti RSVP 🌸" data-fi="Lähetä RSVP 🌸">
+          Send my RSVP 🌸
+        </button>
+        <div class="rsvp-status" id="rsvpStatus"></div>
+      </div>
+
+    </div><!-- end rsvp-form -->
+  </div><!-- end rsvp-section -->
+
+  <!-- MAP -->
+  <div class="map-section">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2306.3!2d25.2937!3d54.6815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dd941494cf50b1%3A0x1c4a2f3a6e3b7e2!2sBernardin%C5%B3%20ba%C5%BEny%C4%8Dia!5e0!3m2!1sen!2slt!4v1"
+      width="100%" height="260" style="border:0; display:block;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 
-  <!-- TRAVEL TIPS -->
   <div class="travel-section">
     <div class="section-title" data-en="Travel <span>Tips</span>" data-lt="Kelionės <span>patarimai</span>" data-fi="Matkavinkit <span>Vilnaan</span>">Travel <span>Tips</span></div>
     <p style="text-align:center; font-size:0.88rem; color:var(--text-light); margin-bottom:4px;" data-en="For our guests travelling from Finland 🇫🇮" data-lt="Svečiams, atvykstantiems iš Suomijos 🇫🇮" data-fi="Suomesta matkustaville vieraillemme 🇫🇮">For our guests travelling from Finland 🇫🇮</p>
@@ -938,25 +1091,27 @@
 // CONFIGURATION — fill these in before deploying
 // =====================================================
 
-// ① Paste your deployed Google Apps Script Web App URL here:
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpCX7mtpnmIyi20ustdUohkCZpObwXAHEvSHdO0KNXNfb4xfx6Jpk3zx4jUfDFDhK8kw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZGid7T8FcrZ5ep2u4NqHEA6qUjuV1PVcM10d_ZQDC6WQ8QDZk9NTvwiU4ANY-6mvffA/exec';
 
-// ② Guest first names (case-insensitive)
 const GUESTS = [
   "Anna","Matti","Jonas","Laima","Erika","Pekka",
   "Maria","Tomas","Laura","Mikael","Rasa","Jurgis",
   "Sofia","Henrik","Neringa","Andrius"
-  // ← Replace with your real guest first names
 ];
 
-// ③ Event date
-const EVENT_DATE = new Date('2025-05-23T14:00:00');
+// Event: 23 May 2026 14:00 EET (UTC+2 in May)
+const EVENT_DATE = new Date('2026-05-23T14:00:00+02:00');
 
 // =====================================================
 
-let currentLang = 'en';
+let currentLang  = 'en';
 let verifiedName = '';
 let attendingVal = '';
+
+// Quiz state — correct answers: Q1=b, Q2=b, Q3=b
+const QUIZ_CORRECT = { 1: 'b', 2: 'b', 3: 'b' };
+let quizAnswers = { 1: null, 2: null, 3: null };
+let quizLocked  = false;
 
 // ===== LANGUAGE =====
 function setLang(lang) {
@@ -981,6 +1136,7 @@ function setLang(lang) {
   });
 
   if (attendingVal) setAttending(attendingVal);
+  if (quizLocked) showQuizResult();
 }
 
 // ===== NAME GATE =====
@@ -1017,7 +1173,7 @@ function checkName() {
 
 // ===== LOAD EXISTING RESPONSE =====
 async function loadExistingResponse(name) {
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwpCX7mtpnmIyi20ustdUohkCZpObwXAHEvSHdO0KNXNfb4xfx6Jpk3zx4jUfDFDhK8kw/exec') return;
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=get&name=${encodeURIComponent(name)}`);
     const data = await res.json();
@@ -1026,8 +1182,14 @@ async function loadExistingResponse(name) {
       if (data.attending) setAttending(data.attending);
       if (data.guests)    document.getElementById('guestCount').value = data.guests;
       if (data.message)   document.getElementById('guestMessage').value = data.message;
+      if (data.quizScore !== undefined) {
+        // Re-show quiz as locked with saved score
+        quizAnswers = data.quizAnswers || quizAnswers;
+        quizLocked = true;
+        showQuizResult();
+      }
     }
-  } catch(e) { /* silent — form stays empty */ }
+  } catch(e) { /* silent */ }
 }
 
 // ===== ATTENDING TOGGLE =====
@@ -1049,6 +1211,59 @@ function setAttending(val) {
   }
 }
 
+// ===== QUIZ =====
+function selectQuiz(q, choice) {
+  if (quizLocked) return;
+  quizAnswers[q] = choice;
+
+  // Update UI for this question
+  ['a','b','c'].forEach(opt => {
+    const btn = document.getElementById(`q${q}${opt}`);
+    btn.classList.toggle('selected', opt === choice);
+  });
+
+  // If all 3 answered, lock and show result
+  if (quizAnswers[1] && quizAnswers[2] && quizAnswers[3]) {
+    quizLocked = true;
+    setTimeout(showQuizResult, 400);
+  }
+}
+
+function showQuizResult() {
+  let score = 0;
+  [1,2,3].forEach(q => {
+    const ans = quizAnswers[q];
+    if (!ans) return;
+    const correct = QUIZ_CORRECT[q];
+    ['a','b','c'].forEach(opt => {
+      const btn = document.getElementById(`q${q}${opt}`);
+      if (!btn) return;
+      btn.classList.remove('selected','correct','wrong');
+      if (opt === correct)      btn.classList.add('correct');
+      else if (opt === ans)     btn.classList.add('wrong');
+    });
+    if (ans === correct) score++;
+    // disable all buttons for this question
+    ['a','b','c'].forEach(opt => {
+      const btn = document.getElementById(`q${q}${opt}`);
+      if (btn) btn.style.pointerEvents = 'none';
+    });
+  });
+
+  const resultBar = document.getElementById('quizResult');
+  resultBar.classList.add('show');
+  document.getElementById('quizScore').textContent = `${score}/3`;
+
+  const msgs = {
+    3: { en: '🎉 Perfect score! You really know Magdalena!', lt: '🎉 Puikus rezultatas! Jūs tikrai pažįstate Magdaleną!', fi: '🎉 Täydet pisteet! Tunnet todella Magdalenan!' },
+    2: { en: '🌸 Well done! 2 out of 3 — great effort!',    lt: '🌸 Gerai! 2 iš 3 — puiku!',                           fi: '🌸 Hyvin tehty! 2/3 — hienoa!' },
+    1: { en: '😊 1 out of 3 — now you know a little more!', lt: '😊 1 iš 3 — dabar žinote šiek tiek daugiau!',         fi: '😊 1/3 — nyt tiedät hieman enemmän!' },
+    0: { en: '😅 0 out of 3 — but you\'ll know her well soon!', lt: '😅 0 iš 3 — bet greitai ją pažinsite!',           fi: '😅 0/3 — mutta tutustut häneen pian!' }
+  };
+  const m = msgs[score];
+  document.getElementById('quizScoreText').textContent = (m[currentLang] || m.en);
+}
+
 // ===== SUBMIT RSVP =====
 async function submitRSVP() {
   const btn = document.getElementById('rsvpSubmitBtn');
@@ -1059,24 +1274,22 @@ async function submitRSVP() {
     return;
   }
 
-  const payload = {
-    action:    'set',
-    name:      verifiedName,
-    attending: attendingVal,
-    guests:    attendingVal === 'yes' ? (document.getElementById('guestCount').value || '1') : '0',
-    message:   document.getElementById('guestMessage').value.trim(),
-    lang:      currentLang,
-    timestamp: new Date().toISOString()
-  };
+  const quizScore = [1,2,3].filter(q => quizAnswers[q] === QUIZ_CORRECT[q]).length;
 
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwpCX7mtpnmIyi20ustdUohkCZpObwXAHEvSHdO0KNXNfb4xfx6Jpk3zx4jUfDFDhK8kw/exec') {
-    showStatus('success', {
-      en: `✅ Thank you, ${verifiedName}! (Demo mode — connect Apps Script to save for real.)`,
-      lt: `✅ Ačiū, ${verifiedName}! (Demo režimas — prijunkite Apps Script.)`,
-      fi: `✅ Kiitos, ${verifiedName}! (Demo-tila — yhdistä Apps Script.)`
-    }[currentLang]);
-    return;
-  }
+  // EET timestamp
+  const nowEET = new Date().toLocaleString('lt-LT', { timeZone: 'Europe/Vilnius', hour12: false });
+
+  const payload = {
+    action:      'set',
+    name:        verifiedName,
+    attending:   attendingVal,
+    guests:      attendingVal === 'yes' ? (document.getElementById('guestCount').value || '1') : '0',
+    message:     document.getElementById('guestMessage').value.trim(),
+    lang:        currentLang,
+    quizScore:   `${quizScore}/3`,
+    quizAnswers: JSON.stringify(quizAnswers),
+    timestamp:   nowEET + ' EET'
+  };
 
   btn.disabled = true;
   showStatus('loading', { en: 'Saving… 🌸', lt: 'Išsaugoma… 🌸', fi: 'Tallennetaan… 🌸' }[currentLang]);
@@ -1107,7 +1320,7 @@ function showStatus(type, msg) {
   el.textContent = msg;
 }
 
-// ===== COUNTDOWN =====
+// ===== COUNTDOWN (EET) =====
 function updateCountdown() {
   const now  = new Date();
   const diff = EVENT_DATE - now;
