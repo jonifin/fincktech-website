@@ -438,17 +438,146 @@
     margin-bottom: 24px;
     line-height: 1.6;
   }
-  .google-form-embed {
-    background: rgba(255,255,255,0.8);
-    border-radius: 20px;
-    padding: 20px;
-    border: 2px dashed var(--blush);
-    color: var(--text-light);
-    font-size: 0.88rem;
-    line-height: 1.7;
+  /* ===== RSVP CUSTOM FORM ===== */
+  .rsvp-fields { text-align: left; margin-top: 10px; }
+
+  .rsvp-field-group {
+    margin-bottom: 20px;
   }
-  .google-form-embed .form-icon { font-size: 2.5rem; margin-bottom: 10px; }
-  /* Replace .google-form-embed with: <iframe src="YOUR_GOOGLE_FORM_URL?embedded=true" width="100%" height="600" frameborder="0">...</iframe> */
+  .rsvp-label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .rsvp-label span { color: var(--rose); }
+
+  /* Yes/No toggle */
+  .attending-toggle {
+    display: flex;
+    gap: 10px;
+  }
+  .attend-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 14px;
+    border: 2px solid var(--blush);
+    background: rgba(255,255,255,0.8);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .attend-btn:hover { border-color: var(--rose); color: var(--text); }
+  .attend-btn.selected-yes {
+    background: linear-gradient(135deg, #d4edda, #b8dfc4);
+    border-color: #7dbf95;
+    color: #2d6a4f;
+  }
+  .attend-btn.selected-no {
+    background: linear-gradient(135deg, #fde8ee, var(--blush));
+    border-color: var(--rose);
+    color: var(--text);
+  }
+
+  /* Number input */
+  .rsvp-number {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 14px;
+    border: 2px solid var(--blush);
+    background: rgba(255,255,255,0.85);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  .rsvp-number:focus { border-color: var(--rose); }
+
+  /* Textarea */
+  .rsvp-textarea {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 14px;
+    border: 2px solid var(--blush);
+    background: rgba(255,255,255,0.85);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text);
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.25s;
+    line-height: 1.6;
+  }
+  .rsvp-textarea:focus { border-color: var(--rose); }
+
+  /* Submit */
+  .rsvp-submit-wrap { text-align: center; margin-top: 24px; }
+  .btn-submit {
+    padding: 15px 40px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, var(--rose), #d4769a);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(232,160,176,0.45);
+    letter-spacing: 0.02em;
+  }
+  .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(232,160,176,0.55); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* Status messages */
+  .rsvp-status {
+    margin-top: 16px;
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: none;
+    line-height: 1.5;
+  }
+  .rsvp-status.success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #2d6a4f;
+    border: 1.5px solid #a8d5b5;
+    display: block;
+  }
+  .rsvp-status.error {
+    background: linear-gradient(135deg, #fde8ee, #fbd0dc);
+    color: #8b2a3a;
+    border: 1.5px solid var(--blush);
+    display: block;
+  }
+  .rsvp-status.loading {
+    background: rgba(255,255,255,0.8);
+    color: var(--text-light);
+    border: 1.5px solid var(--blush);
+    display: block;
+  }
+
+  /* Previously saved response banner */
+  .rsvp-saved-banner {
+    background: linear-gradient(135deg, var(--gold-light), rgba(255,255,255,0.9));
+    border: 1.5px solid rgba(212,169,106,0.35);
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    display: none;
+  }
+  .rsvp-saved-banner.show { display: block; }
 
   /* ===== TRAVEL TIPS ===== */
   .travel-section {
@@ -695,17 +824,72 @@
     <!-- RSVP Form (unlocked) -->
     <div class="rsvp-form" id="rsvpForm">
       <div class="rsvp-welcome" id="rsvpWelcome">Welcome! 🌸</div>
-      <p class="rsvp-note" data-en="Please fill in the form below to let us know if you'll be joining us for this special day!" data-lt="Užpildykite žemiau esančią formą ir praneškite, ar dalyvausite šioje ypatingoje dienoje!" data-fi="Täytä alla oleva lomake ja kerro meille, osallistutko tähän erityiseen päivään!">Please fill in the form below to let us know if you'll be joining us for this special day!</p>
+      <p class="rsvp-note" data-en="Please fill in the form below. Your response is private — only you can see your own answers."
+         data-lt="Užpildykite žemiau esančią formą. Jūsų atsakymas privatus — tik jūs matote savo atsakymus."
+         data-fi="Täytä alla oleva lomake. Vastauksesi on yksityinen — vain sinä näet omat vastauksesi.">
+        Please fill in the form below. Your response is private — only you can see your own answers.
+      </p>
 
-      <!-- REPLACE THIS BLOCK WITH YOUR GOOGLE FORM IFRAME:
-           <iframe src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
-                   width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-      -->
-      <div class="google-form-embed">
-        <div class="form-icon">📋</div>
-        <strong data-en="Google Form RSVP" data-lt="Google formos RSVP" data-fi="Google Forms RSVP">Google Form RSVP</strong><br>
-        <span data-en="Replace this block with your Google Form iframe embed code." data-lt="Pakeiskite šį bloką savo Google formos iframe kodu." data-fi="Korvaa tämä lohko Google Forms -upotuskoodilla.">Replace this block with your Google Form iframe embed code.</span><br><br>
-        <span style="font-size:0.8rem; opacity:0.7;" data-en="Go to Google Forms → Share → Embed → copy iframe code and paste it here." data-lt="Google Forms → Bendrinti → Įterpti → nukopijuokite iframe kodą." data-fi="Google Forms → Jaa → Upota → kopioi iframe-koodi ja liitä tähän.">Go to Google Forms → Share → Embed → copy iframe code and paste it here.</span>
+      <!-- Previously saved banner -->
+      <div class="rsvp-saved-banner" id="rsvpSavedBanner">
+        ✏️ <span data-en="We found your previous response — it's been pre-filled below. Feel free to update it!"
+                  data-lt="Radome jūsų ankstesnį atsakymą — jis užpildytas žemiau. Galite jį atnaujinti!"
+                  data-fi="Löysimme aiemman vastauksesi — se on esitäytetty alla. Voit päivittää sen!">
+          We found your previous response — it's been pre-filled below. Feel free to update it!
+        </span>
+      </div>
+
+      <div class="rsvp-fields">
+
+        <!-- Attending -->
+        <div class="rsvp-field-group">
+          <label class="rsvp-label">
+            <span>01.</span>
+            <span data-en=" Will you be attending?" data-lt=" Ar dalyvausite?" data-fi=" Osallistutko?"> Will you be attending?</span>
+          </label>
+          <div class="attending-toggle">
+            <button class="attend-btn" id="btnYes" onclick="setAttending('yes')"
+              data-en="✅ Yes, I'll be there!" data-lt="✅ Taip, dalyvausiu!" data-fi="✅ Kyllä, tulen!">
+              ✅ Yes, I'll be there!
+            </button>
+            <button class="attend-btn" id="btnNo" onclick="setAttending('no')"
+              data-en="😔 Sorry, can't make it" data-lt="😔 Atsiprašau, negalėsiu" data-fi="😔 Pahoittelut, en pääse">
+              😔 Sorry, can't make it
+            </button>
+          </div>
+        </div>
+
+        <!-- Number of guests -->
+        <div class="rsvp-field-group" id="guestCountGroup">
+          <label class="rsvp-label" for="guestCount">
+            <span>02.</span>
+            <span data-en=" How many guests in total (including yourself)?" data-lt=" Kiek iš viso svečių (įskaitant jus)?" data-fi=" Kuinka monta vierasta yhteensä (mukaan lukien sinut)?"> How many guests in total (including yourself)?</span>
+          </label>
+          <input class="rsvp-number" type="number" id="guestCount" min="1" max="10" placeholder="1"
+            data-ph-en="e.g. 2" data-ph-lt="pvz. 2" data-ph-fi="esim. 2" />
+        </div>
+
+        <!-- Message -->
+        <div class="rsvp-field-group">
+          <label class="rsvp-label" for="guestMessage">
+            <span>03.</span>
+            <span data-en=" A message for the family 💌 (optional)" data-lt=" Žinutė šeimai 💌 (nebūtina)" data-fi=" Viesti perheelle 💌 (valinnainen)"> A message for the family 💌 (optional)</span>
+          </label>
+          <textarea class="rsvp-textarea" id="guestMessage" rows="4"
+            data-ph-en="Write your warm wishes here..."
+            data-ph-lt="Parašykite savo sveikinimus čia..."
+            data-ph-fi="Kirjoita lämpimät toivomuksesi tähän..."
+            placeholder="Write your warm wishes here..."></textarea>
+        </div>
+
+        <div class="rsvp-submit-wrap">
+          <button class="btn-submit" id="rsvpSubmitBtn" onclick="submitRSVP()"
+            data-en="Send my RSVP 🌸" data-lt="Siųsti RSVP 🌸" data-fi="Lähetä RSVP 🌸">
+            Send my RSVP 🌸
+          </button>
+          <div class="rsvp-status" id="rsvpStatus"></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -749,50 +933,54 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ===== GUEST LIST =====
-// Add guest first names here (case-insensitive)
-// EXAMPLE: const GUESTS = ["Anna","Matti","Jonas","Laima","Erika","Pekka"];
+<script>
+// =====================================================
+// CONFIGURATION — fill these in before deploying
+// =====================================================
+
+// ① Paste your deployed Google Apps Script Web App URL here:
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpCX7mtpnmIyi20ustdUohkCZpObwXAHEvSHdO0KNXNfb4xfx6Jpk3zx4jUfDFDhK8kw/exec';
+
+// ② Guest first names (case-insensitive)
 const GUESTS = [
   "Anna","Matti","Jonas","Laima","Erika","Pekka",
   "Maria","Tomas","Laura","Mikael","Rasa","Jurgis",
   "Sofia","Henrik","Neringa","Andrius"
-  // ← Add your actual guest first names here
+  // ← Replace with your real guest first names
 ];
 
-// ===== EVENT DATE =====
-// Set your event date here: new Date('YYYY-MM-DDTHH:MM:00')
+// ③ Event date
 const EVENT_DATE = new Date('2025-09-06T12:00:00');
 
-// ===== LANGUAGE =====
-let currentLang = 'en';
+// =====================================================
 
+let currentLang = 'en';
+let verifiedName = '';
+let attendingVal = '';
+
+// ===== LANGUAGE =====
 function setLang(lang) {
   currentLang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
 
-  // Update all text nodes
   document.querySelectorAll('[data-en]').forEach(el => {
     const txt = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
     el.innerHTML = txt;
   });
-
-  // Update placeholders
   document.querySelectorAll('[data-ph-en]').forEach(el => {
     el.placeholder = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en');
   });
 
-  // Update gate error if visible
   const err = document.getElementById('gateError');
-  if(err.classList.contains('show')) {
+  if (err.classList.contains('show')) {
     err.textContent = err.getAttribute('data-' + lang) || err.getAttribute('data-en');
   }
-
-  // Update section titles with inner HTML
   document.querySelectorAll('.section-title[data-en]').forEach(el => {
     el.innerHTML = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
   });
+
+  if (attendingVal) setAttending(attendingVal);
 }
 
 // ===== NAME GATE =====
@@ -803,16 +991,17 @@ function checkName() {
   const err = document.getElementById('gateError');
 
   if (found) {
+    verifiedName = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     document.getElementById('nameGate').style.display = 'none';
-    const form = document.getElementById('rsvpForm');
-    form.classList.add('show');
+    document.getElementById('rsvpForm').classList.add('show');
     const welcomeMsgs = {
-      en: `Welcome, ${input}! 🌸`,
-      lt: `Sveiki, ${input}! 🌸`,
-      fi: `Tervetuloa, ${input}! 🌸`
+      en: `Welcome, ${verifiedName}! 🌸`,
+      lt: `Sveiki, ${verifiedName}! 🌸`,
+      fi: `Tervetuloa, ${verifiedName}! 🌸`
     };
     document.getElementById('rsvpWelcome').textContent = welcomeMsgs[currentLang] || welcomeMsgs.en;
     err.classList.remove('show');
+    loadExistingResponse(verifiedName);
   } else {
     err.classList.add('show');
     const errMsg = {
@@ -826,9 +1015,101 @@ function checkName() {
   }
 }
 
+// ===== LOAD EXISTING RESPONSE =====
+async function loadExistingResponse(name) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  try {
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=get&name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    if (data && data.found) {
+      document.getElementById('rsvpSavedBanner').classList.add('show');
+      if (data.attending) setAttending(data.attending);
+      if (data.guests)    document.getElementById('guestCount').value = data.guests;
+      if (data.message)   document.getElementById('guestMessage').value = data.message;
+    }
+  } catch(e) { /* silent — form stays empty */ }
+}
+
+// ===== ATTENDING TOGGLE =====
+function setAttending(val) {
+  attendingVal = val;
+  const btnYes = document.getElementById('btnYes');
+  const btnNo  = document.getElementById('btnNo');
+  btnYes.classList.remove('selected-yes','selected-no');
+  btnNo.classList.remove('selected-yes','selected-no');
+  const group = document.getElementById('guestCountGroup');
+  if (val === 'yes') {
+    btnYes.classList.add('selected-yes');
+    group.style.opacity = '1';
+    group.style.pointerEvents = 'auto';
+  } else {
+    btnNo.classList.add('selected-no');
+    group.style.opacity = '0.4';
+    group.style.pointerEvents = 'none';
+  }
+}
+
+// ===== SUBMIT RSVP =====
+async function submitRSVP() {
+  const btn = document.getElementById('rsvpSubmitBtn');
+
+  if (!attendingVal) {
+    const msg = { en: '⚠️ Please select Yes or No first.', lt: '⚠️ Pirmiausia pasirinkite Taip arba Ne.', fi: '⚠️ Valitse ensin Kyllä tai Ei.' };
+    showStatus('error', msg[currentLang] || msg.en);
+    return;
+  }
+
+  const payload = {
+    action:    'set',
+    name:      verifiedName,
+    attending: attendingVal,
+    guests:    attendingVal === 'yes' ? (document.getElementById('guestCount').value || '1') : '0',
+    message:   document.getElementById('guestMessage').value.trim(),
+    lang:      currentLang,
+    timestamp: new Date().toISOString()
+  };
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    showStatus('success', {
+      en: `✅ Thank you, ${verifiedName}! (Demo mode — connect Apps Script to save for real.)`,
+      lt: `✅ Ačiū, ${verifiedName}! (Demo režimas — prijunkite Apps Script.)`,
+      fi: `✅ Kiitos, ${verifiedName}! (Demo-tila — yhdistä Apps Script.)`
+    }[currentLang]);
+    return;
+  }
+
+  btn.disabled = true;
+  showStatus('loading', { en: 'Saving… 🌸', lt: 'Išsaugoma… 🌸', fi: 'Tallennetaan… 🌸' }[currentLang]);
+
+  try {
+    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (data.success) {
+      showStatus('success', {
+        en: `🎉 Thank you, ${verifiedName}! Your RSVP has been saved.`,
+        lt: `🎉 Ačiū, ${verifiedName}! Jūsų RSVP išsaugotas.`,
+        fi: `🎉 Kiitos, ${verifiedName}! RSVP:si on tallennettu.`
+      }[currentLang]);
+      document.getElementById('rsvpSavedBanner').classList.add('show');
+    } else { throw new Error(data.error || 'Unknown error'); }
+  } catch(e) {
+    showStatus('error', {
+      en: '⚠️ Something went wrong. Please try again or contact us.',
+      lt: '⚠️ Kažkas nepavyko. Bandykite dar kartą arba susisiekite.',
+      fi: '⚠️ Jotain meni pieleen. Yritä uudelleen tai ota yhteyttä.'
+    }[currentLang]);
+  } finally { btn.disabled = false; }
+}
+
+function showStatus(type, msg) {
+  const el = document.getElementById('rsvpStatus');
+  el.className = 'rsvp-status ' + type;
+  el.textContent = msg;
+}
+
 // ===== COUNTDOWN =====
 function updateCountdown() {
-  const now = new Date();
+  const now  = new Date();
   const diff = EVENT_DATE - now;
   if (diff <= 0) {
     document.getElementById('cd-d').textContent = '🎉';
@@ -836,7 +1117,12 @@ function updateCountdown() {
     document.getElementById('cd-m').textContent = '🌸';
     return;
   }
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  do
+  document.getElementById('cd-d').textContent = Math.floor(diff / (1000*60*60*24));
+  document.getElementById('cd-h').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  document.getElementById('cd-m').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
+}
+updateCountdown();
+setInterval(updateCountdown, 30000);
+</script>
+</body>
+</html>
