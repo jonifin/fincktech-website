@@ -1042,7 +1042,7 @@
   <!-- MAP -->
   <div class="map-section">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2306.3!2d25.2937!3d54.6815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dd941494cf50b1%3A0x1c4a2f3a6e3b7e2!2sBernardin%C5%B3%20ba%C5%BEny%C4%8Dia!5e0!3m2!1sen!2slt!4v1"
+      src="https://maps.google.com/maps?q=Bernardin%C5%B3+ba%C5%BEny%C4%8Dia,+Maironio+g.+8,+Vilnius&output=embed&z=17"
       width="100%" height="260" style="border:0; display:block;" allowfullscreen="" loading="lazy"
       referrerpolicy="no-referrer-when-downgrade">
     </iframe>
@@ -1091,13 +1091,11 @@
 // CONFIGURATION — fill these in before deploying
 // =====================================================
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZGid7T8FcrZ5ep2u4NqHEA6qUjuV1PVcM10d_ZQDC6WQ8QDZk9NTvwiU4ANY-6mvffA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGFhoOqNTQKZ-CVn5FaJQ977Yi7xXQabiROggNfT0R2TobfPWTXfmmQbV2fz3QbT7xSQ/exec';
 
-const GUESTS = [
-  "Anna","Matti","Jonas","Laima","Erika","Pekka",
-  "Maria","Tomas","Laura","Mikael","Rasa","Jurgis",
-  "Sofia","Henrik","Neringa","Andrius"
-];
+// Guest list is loaded dynamically from the "Guests" sheet in Google Sheets.
+// Edit names there — no code changes needed.
+let GUESTS = [];
 
 // Event: 23 May 2026 14:00 EET (UTC+2 in May)
 const EVENT_DATE = new Date('2026-05-23T14:00:00+02:00');
@@ -1320,6 +1318,18 @@ function showStatus(type, msg) {
   el.textContent = msg;
 }
 
+// ===== LOAD GUEST LIST FROM GOOGLE SHEET =====
+async function loadGuests() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  try {
+    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getGuests`);
+    const data = await res.json();
+    if (data && Array.isArray(data.guests) && data.guests.length > 0) {
+      GUESTS = data.guests;
+    }
+  } catch(e) { /* silent — name gate will show "not found" if list is empty */ }
+}
+
 // ===== COUNTDOWN (EET) =====
 function updateCountdown() {
   const now  = new Date();
@@ -1334,6 +1344,7 @@ function updateCountdown() {
   document.getElementById('cd-h').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
   document.getElementById('cd-m').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
 }
+loadGuests();
 updateCountdown();
 setInterval(updateCountdown, 30000);
 </script>
