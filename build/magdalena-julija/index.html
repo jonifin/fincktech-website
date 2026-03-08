@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Magdalena Julija 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --blush: #f7c5d0;
+    --rose: #e8a0b0;
+    --petal: #fde8ee;
+    --sage: #b5c9b1;
+    --sage-light: #d9e8d5;
+    --gold: #d4a96a;
+    --gold-light: #f5e6d0;
+    --ivory: #fdf8f2;
+    --text: #5a3d4a;
+    --text-light: #8a6a75;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--ivory);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND DECORATIONS ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(247,197,208,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(181,201,177,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(212,169,106,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== FLOATING PETALS ===== */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 1.2rem;
+    animation: floatPetal linear infinite;
+    opacity: 0.6;
+  }
+  @keyframes floatPetal {
+    0%   { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== LANGUAGE SWITCHER ===== */
+  .lang-bar {
+    position: fixed;
+    top: 16px; right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 6px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 8px 12px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(232,160,176,0.25);
+    border: 1.5px solid rgba(247,197,208,0.5);
+  }
+  .lang-btn {
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 50px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    transition: all 0.25s ease;
+    letter-spacing: 0.03em;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--blush);
+    color: var(--text);
+  }
+
+  /* ===== WRAPPER ===== */
+  .wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    text-align: center;
+    padding: 80px 20px 50px;
+    animation: fadeUp 1s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--rose);
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .hero-name span {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .hero-tagline {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-top: 10px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  /* ===== PHOTO FRAME ===== */
+  .photo-frame-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 10px;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .photo-frame {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--petal), var(--blush), var(--sage-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow:
+      0 0 0 10px var(--ivory),
+      0 0 0 22px var(--blush),
+      0 0 0 34px var(--ivory),
+      0 20px 60px rgba(232,160,176,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: none; /* shown when src set */
+  }
+  .photo-placeholder {
+    font-size: 4rem;
+    margin-bottom: 8px;
+  }
+  .photo-placeholder-text {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-weight: 600;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.4;
+  }
+
+  /* ===== DECORATIVE DIVIDER ===== */
+  .divider {
+    text-align: center;
+    margin: 20px 0;
+    color: var(--rose);
+    font-size: 1.4rem;
+    letter-spacing: 12px;
+    opacity: 0.6;
+  }
+
+  /* ===== CARDS ===== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 30px 0;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  @media (max-width: 560px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 30px 26px;
+    border: 2px solid rgba(247,197,208,0.4);
+    box-shadow: 0 8px 32px rgba(232,160,176,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--petal), transparent);
+    opacity: 0.6;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(232,160,176,0.2);
+  }
+  .card-icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .card-detail {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-weight: 600;
+  }
+  .card-detail strong {
+    color: var(--rose);
+    font-weight: 700;
+  }
+
+  /* ===== SCHEDULE ===== */
+  .schedule-section {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 36px 32px;
+    margin: 20px 0;
+    border: 2px solid rgba(181,201,177,0.4);
+    box-shadow: 0 8px 32px rgba(181,201,177,0.12);
+    animation: fadeUp 1s 0.7s ease both;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    text-align: center;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+  .section-title span {
+    font-style: italic;
+    color: var(--rose);
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 24px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 54px;
+  }
+  .timeline-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(232,160,176,0.3);
+  }
+  .timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 30px;
+    background: linear-gradient(to bottom, var(--rose), var(--sage));
+    margin-top: 6px;
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+  .timeline-content { padding-top: 8px; }
+  .timeline-time {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .timeline-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .timeline-desc {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ===== MAP PLACEHOLDER ===== */
+  .map-section {
+    border-radius: 28px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 8px 32px rgba(181,201,177,0.2);
+    border: 2px solid rgba(181,201,177,0.4);
+    animation: fadeUp 1s 0.8s ease both;
+  }
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--sage-light), var(--petal));
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+  .map-placeholder .map-icon { font-size: 3rem; }
+  /* Replace the map-placeholder div with an <iframe> from Google Maps */
+
+  /* ===== RSVP SECTION ===== */
+  .rsvp-section {
+    background: linear-gradient(135deg, rgba(247,197,208,0.3), rgba(181,201,177,0.2));
+    border-radius: 28px;
+    padding: 40px 32px;
+    margin: 20px 0;
+    border: 2px solid rgba(247,197,208,0.5);
+    box-shadow: 0 8px 32px rgba(232,160,176,0.12);
+    animation: fadeUp 1s 0.9s ease both;
+    text-align: center;
+  }
+
+  /* Name gate */
+  .name-gate { }
+  .name-gate-text {
+    font-size: 0.92rem;
+    color: var(--text-light);
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+  .name-input-wrap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .name-input {
+    padding: 14px 22px;
+    border-radius: 50px;
+    border: 2px solid var(--blush);
+    background: rgba(255,255,255,0.9);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    min-width: 220px;
+    transition: border-color 0.25s;
+  }
+  .name-input:focus { border-color: var(--rose); }
+  .name-input::placeholder { color: #c0a0aa; }
+
+  .btn {
+    padding: 14px 28px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, var(--rose), var(--blush));
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(232,160,176,0.4);
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232,160,176,0.5);
+  }
+  .btn:active { transform: translateY(0); }
+
+  .gate-error {
+    margin-top: 14px;
+    font-size: 0.88rem;
+    color: #c0445a;
+    font-weight: 600;
+    display: none;
+  }
+  .gate-error.show { display: block; }
+
+  /* RSVP Form (unlocked) */
+  .rsvp-form { display: none; }
+  .rsvp-form.show { display: block; }
+  .rsvp-welcome {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--rose);
+    margin-bottom: 10px;
+  }
+  .rsvp-note {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .google-form-embed {
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px dashed var(--blush);
+    color: var(--text-light);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .google-form-embed .form-icon { font-size: 2.5rem; margin-bottom: 10px; }
+  /* Replace .google-form-embed with: <iframe src="YOUR_GOOGLE_FORM_URL?embedded=true" width="100%" height="600" frameborder="0">...</iframe> */
+
+  /* ===== TRAVEL TIPS ===== */
+  .travel-section {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 36px 32px;
+    margin: 20px 0;
+    border: 2px solid rgba(212,169,106,0.25);
+    animation: fadeUp 1s 1s ease both;
+  }
+  .travel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .travel-card {
+    background: linear-gradient(135deg, var(--gold-light), rgba(255,255,255,0.8));
+    border-radius: 18px;
+    padding: 20px;
+    border: 1.5px solid rgba(212,169,106,0.2);
+  }
+  .travel-card-icon { font-size: 1.6rem; margin-bottom: 8px; }
+  .travel-card-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .travel-card-text {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+  .footer-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .footer-hearts { color: var(--rose); font-size: 1.1rem; letter-spacing: 6px; }
+
+  /* ===== COUNTDOWN ===== */
+  .countdown-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0 0;
+    flex-wrap: wrap;
+  }
+  .countdown-unit {
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 70px;
+    border: 2px solid rgba(247,197,208,0.5);
+    box-shadow: 0 4px 16px rgba(232,160,176,0.1);
+  }
+  .countdown-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--rose);
+    line-height: 1;
+    display: block;
+  }
+  .countdown-lbl {
+    font-size: 0.68rem;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Petals -->
+<div class="petal" style="left:5%; animation-duration:9s; animation-delay:0s; font-size:1rem;">🌸</div>
+<div class="petal" style="left:18%; animation-duration:11s; animation-delay:2s; font-size:0.8rem;">🌷</div>
+<div class="petal" style="left:33%; animation-duration:8s; animation-delay:4s; font-size:1.1rem;">🌸</div>
+<div class="petal" style="left:52%; animation-duration:13s; animation-delay:1s; font-size:0.7rem;">✿</div>
+<div class="petal" style="left:68%; animation-duration:10s; animation-delay:3s; font-size:0.9rem;">🌸</div>
+<div class="petal" style="left:80%; animation-duration:12s; animation-delay:5s; font-size:0.75rem;">🌷</div>
+<div class="petal" style="left:92%; animation-duration:9s; animation-delay:6s; font-size:1rem;">🌸</div>
+
+<!-- Language Switcher -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('lt')">LT</button>
+  <button class="lang-btn" onclick="setLang('fi')">FI</button>
+</div>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-subtitle" data-en="You are warmly invited to celebrate" data-lt="Mielai kviečiame švęsti" data-fi="Sinut on lämpimästi kutsuttu juhlimaan">You are warmly invited to celebrate</div>
+    <div class="hero-name">Magdalena <span>Julija</span></div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="hero-tagline" data-en="Christening & First Birthday 🎀" data-lt="Krikštynos ir pirmasis gimtadienis 🎀" data-fi="Kaste & Ensimmäiset syntymäpäivät 🎀">Christening & First Birthday 🎀</div>
+
+    <div class="photo-frame-wrap">
+      <div class="photo-frame">
+        <!-- Replace src with your photo URL: <img src="YOUR_PHOTO_URL" alt="Magdalena Julija"> -->
+        <div class="photo-placeholder">👶🏻</div>
+        <div class="photo-placeholder-text" data-en="Photo coming soon" data-lt="Nuotrauka netrukus" data-fi="Kuva tulossa pian">Photo coming soon</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-bar" id="countdown">
+      <div class="countdown-unit"><span class="countdown-num" id="cd-d">--</span><div class="countdown-lbl" data-en="Days" data-lt="Dienos" data-fi="Päivää">Days</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-h">--</span><div class="countdown-lbl" data-en="Hours" data-lt="Valandos" data-fi="Tuntia">Hours</div></div>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-m">--</span><div class="countdown-lbl" data-en="Minutes" data-lt="Minutės" data-fi="Minuuttia">Minutes</div></div>
+    </div>
+  </div>
+
+  <!-- EVENT CARDS -->
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🕊️</div>
+      <div class="card-title" data-en="Christening" data-lt="Krikštynos" data-fi="Kaste">Christening</div>
+      <div class="card-detail">
+        <strong data-en="Date" data-lt="Data" data-fi="Päivämäärä">Date</strong><br>
+        <span data-en="📅 Date to be announced" data-lt="📅 Data bus paskelbta" data-fi="📅 Päivämäärä ilmoitetaan">📅 Date to be announced</span><br><br>
+        <strong data-en="Time" data-lt="Laikas" data-fi="Aika">Time</strong><br>
+        <span data-en="🕐 Time to be announced" data-lt="🕐 Laikas bus paskelbtas" data-fi="🕐 Aika ilmoitetaan">🕐 Time to be announced</span><br><br>
+        <strong data-en="Venue" data-lt="Vieta" data-fi="Paikka">Venue</strong><br>
+        <span data-en="📍 Church, Vilnius, Lithuania" data-lt="📍 Bažnyčia, Vilnius" data-fi="📍 Kirkko, Vilnius, Liettua">📍 Church, Vilnius, Lithuania</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎂</div>
+      <div class="card-title" data-en="Birthday Party" data-lt="Gimtadienio šventė" data-fi="Syntymäpäiväjuhlat">Birthday Party</div>
+      <div class="card-detail">
+        <strong data-en="Date" data-lt="Data" data-fi="Päivämäärä">Date</strong><br>
+        <span data-en="📅 Date to be announced" data-lt="📅 Data bus paskelbta" data-fi="📅 Päivämäärä ilmoitetaan">📅 Date to be announced</span><br><br>
+        <strong data-en="Time" data-lt="Laikas" data-fi="Aika">Time</strong><br>
+        <span data-en="🕐 Time to be announced" data-lt="🕐 Laikas bus paskelbtas" data-fi="🕐 Aika ilmoitetaan">🕐 Time to be announced</span><br><br>
+        <strong data-en="Venue" data-lt="Vieta" data-fi="Paikka">Venue</strong><br>
+        <span data-en="📍 Venue, Vilnius, Lithuania" data-lt="📍 Vieta, Vilnius" data-fi="📍 Juhlapaikka, Vilnius, Liettua">📍 Venue, Vilnius, Lithuania</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="schedule-section">
+    <div class="section-title" data-en="Day <span>Schedule</span>" data-lt="Dienos <span>programa</span>" data-fi="Päivän <span>ohjelma</span>">Day <span>Schedule</span></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-dot">🕊️</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-time" data-en="Morning · TBA" data-lt="Rytas · TBA" data-fi="Aamu · TBA">Morning · TBA</div>
+          <div class="timeline-label" data-en="Christening Ceremony" data-lt="Krikštyno ceremonija" data-fi="Kastetilaisuus">Christening Ceremony</div>
+          <div class="timeline-desc" data-en="Holy Mass & Baptism at the church" data-lt="Šv. Mišios ir krikštas bažnyčioje" data-fi="Kaste-seremonia kirkossa">Holy Mass & Baptism at the church</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-dot">🥂</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-time" data-en="Midday · TBA" data-lt="Pietūs · TBA" data-fi="Keskipäivä · TBA">Midday · TBA</div>
+          <div class="timeline-label" data-en="Welcome Reception" data-lt="Svečių priėmimas" data-fi="Tervetuliaistilaisuus">Welcome Reception</div>
+          <div class="timeline-desc" data-en="Drinks & welcome snacks at the venue" data-lt="Gėrimai ir užkandžiai" data-fi="Juomat ja välipalat juhlapaikalla">Drinks & welcome snacks at the venue</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-dot">🍽️</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-time" data-en="Afternoon · TBA" data-lt="Popietė · TBA" data-fi="Iltapäivä · TBA">Afternoon · TBA</div>
+          <div class="timeline-label" data-en="Festive Lunch & Dinner" data-lt="Šventiniai pietūs ir vakarienė" data-fi="Juhla-ateria">Festive Lunch & Dinner</div>
+          <div class="timeline-desc" data-en="Celebrating together with family" data-lt="Švenčiame kartu su šeima" data-fi="Juhlimme yhdessä perheen kanssa">Celebrating together with family</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-dot">🎂</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-time" data-en="Evening · TBA" data-lt="Vakaras · TBA" data-fi="Ilta · TBA">Evening · TBA</div>
+          <div class="timeline-label" data-en="Birthday Cake & Celebrations!" data-lt="Gimtadienio tortas ir šventė!" data-fi="Syntymäpäiväkakku ja juhlat!">Birthday Cake & Celebrations!</div>
+          <div class="timeline-desc" data-en="Cutting the cake & first birthday photos" data-lt="Torto pjaustymas ir nuotraukos" data-fi="Kakun leikkaus ja syntymäpäiväkuvat">Cutting the cake & first birthday photos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-section">
+    <!-- Replace this placeholder div with a Google Maps iframe:
+         <iframe src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    -->
+    <div class="map-placeholder">
+      <div class="map-icon">🗺️</div>
+      <div>
+        <strong data-en="Vilnius, Lithuania" data-lt="Vilnius, Lietuva" data-fi="Vilna, Liettua">Vilnius, Lithuania</strong><br>
+        <span style="font-size:0.8rem; opacity:0.7;" data-en="Venue address will be added here" data-lt="Vietos adresas bus pridėtas" data-fi="Juhlapaikan osoite lisätään tähän">Venue address will be added here</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RSVP -->
+  <div class="rsvp-section">
+    <div class="section-title" data-en="Will you <span>join us?</span>" data-lt="Ar <span>dalyvausite?</span>" data-fi="Liitytkö <span>seuraamme?</span>">Will you <span>join us?</span></div>
+
+    <!-- Name Gate -->
+    <div class="name-gate" id="nameGate">
+      <p class="name-gate-text" data-en="Please enter your first name to access the RSVP form. This keeps responses private between guests." data-lt="Įveskite savo vardą, kad galėtumėte pasiekti RSVP formą." data-fi="Anna etunimesi päästäksesi RSVP-lomakkeeseen. Tämä pitää vastaukset yksityisinä.">Please enter your first name to access the RSVP form. This keeps responses private between guests.</p>
+      <div class="name-input-wrap">
+        <input class="name-input" id="nameInput" type="text"
+          placeholder="Your first name..."
+          data-ph-en="Your first name..."
+          data-ph-lt="Jūsų vardas..."
+          data-ph-fi="Etunimesi..."
+          onkeydown="if(event.key==='Enter') checkName()"
+        />
+        <button class="btn" onclick="checkName()" data-en="Enter ✨" data-lt="Įvesti ✨" data-fi="Syötä ✨">Enter ✨</button>
+      </div>
+      <div class="gate-error" id="gateError" data-en="Name not found. Please check your name or contact us." data-lt="Vardas nerastas. Patikrinkite vardą arba susisiekite su mumis." data-fi="Nimeä ei löydy. Tarkista nimesi tai ota yhteyttä.">Name not found. Please check your name or contact us.</div>
+    </div>
+
+    <!-- RSVP Form (unlocked) -->
+    <div class="rsvp-form" id="rsvpForm">
+      <div class="rsvp-welcome" id="rsvpWelcome">Welcome! 🌸</div>
+      <p class="rsvp-note" data-en="Please fill in the form below to let us know if you'll be joining us for this special day!" data-lt="Užpildykite žemiau esančią formą ir praneškite, ar dalyvausite šioje ypatingoje dienoje!" data-fi="Täytä alla oleva lomake ja kerro meille, osallistutko tähän erityiseen päivään!">Please fill in the form below to let us know if you'll be joining us for this special day!</p>
+
+      <!-- REPLACE THIS BLOCK WITH YOUR GOOGLE FORM IFRAME:
+           <iframe src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+                   width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      -->
+      <div class="google-form-embed">
+        <div class="form-icon">📋</div>
+        <strong data-en="Google Form RSVP" data-lt="Google formos RSVP" data-fi="Google Forms RSVP">Google Form RSVP</strong><br>
+        <span data-en="Replace this block with your Google Form iframe embed code." data-lt="Pakeiskite šį bloką savo Google formos iframe kodu." data-fi="Korvaa tämä lohko Google Forms -upotuskoodilla.">Replace this block with your Google Form iframe embed code.</span><br><br>
+        <span style="font-size:0.8rem; opacity:0.7;" data-en="Go to Google Forms → Share → Embed → copy iframe code and paste it here." data-lt="Google Forms → Bendrinti → Įterpti → nukopijuokite iframe kodą." data-fi="Google Forms → Jaa → Upota → kopioi iframe-koodi ja liitä tähän.">Go to Google Forms → Share → Embed → copy iframe code and paste it here.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAVEL TIPS -->
+  <div class="travel-section">
+    <div class="section-title" data-en="Travel <span>Tips</span>" data-lt="Kelionės <span>patarimai</span>" data-fi="Matkavinkit <span>Vilnaan</span>">Travel <span>Tips</span></div>
+    <p style="text-align:center; font-size:0.88rem; color:var(--text-light); margin-bottom:4px;" data-en="For our guests travelling from Finland 🇫🇮" data-lt="Svečiams, atvykstantiems iš Suomijos 🇫🇮" data-fi="Suomesta matkustaville vieraillemme 🇫🇮">For our guests travelling from Finland 🇫🇮</p>
+    <div class="travel-grid">
+      <div class="travel-card">
+        <div class="travel-card-icon">✈️</div>
+        <div class="travel-card-title" data-en="Getting There" data-lt="Kaip atvykti" data-fi="Matka perille">Getting There</div>
+        <div class="travel-card-text" data-en="Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair, Ryanair." data-lt="Tiesioginiai skrydžiai iš Helsinkio (HEL) į Vilnių (VNO) ~1,5 val." data-fi="Suorat lennot Helsingistä (HEL) Vilnaan (VNO) ~1,5h. Lennot: Finnair, Ryanair.">Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair, Ryanair.</div>
+      </div>
+      <div class="travel-card">
+        <div class="travel-card-icon">🏨</div>
+        <div class="travel-card-title" data-en="Accommodation" data-lt="Nakvynė" data-fi="Majoitus">Accommodation</div>
+        <div class="travel-card-text" data-en="Recommended: Stikliai Hotel, Artagonist Hotel, or Airbnb in Vilnius Old Town." data-lt="Rekomenduojame: Stikliai Hotel, Artagonist arba Airbnb senamiestis." data-fi="Suosittelemme: Stikliai Hotel, Artagonist Hotel tai Airbnb Vilnan vanhassa kaupungissa.">Recommended: Stikliai Hotel, Artagonist Hotel, or Airbnb in Vilnius Old Town.</div>
+      </div>
+      <div class="travel-card">
+        <div class="travel-card-icon">🚗</div>
+        <div class="travel-card-title" data-en="Getting Around" data-lt="Susisiekimas" data-fi="Liikkuminen">Getting Around</div>
+        <div class="travel-card-text" data-en="Bolt & Uber work great in Vilnius. Car rental also available at the airport." data-lt="Bolt ir Uber puikiai veikia Vilniuje. Automobilių nuoma oro uoste." data-fi="Bolt ja Uber toimivat hyvin Vilnassa. Autonvuokraus lentokentältä.">Bolt & Uber work great in Vilnius. Car rental also available at the airport.</div>
+      </div>
+      <div class="travel-card">
+        <div class="travel-card-icon">💶</div>
+        <div class="travel-card-title" data-en="Currency" data-lt="Valiuta" data-fi="Valuutta">Currency</div>
+        <div class="travel-card-text" data-en="Lithuania uses Euro (€). Cards accepted almost everywhere. ATMs widely available." data-lt="Lietuva naudoja eurą (€). Kortelės priimamos beveik visur." data-fi="Liettua käyttää euroa (€). Kortit hyväksytään lähes kaikkialla.">Lithuania uses Euro (€). Cards accepted almost everywhere. ATMs widely available.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-name">Magdalena Julija</span>
+    <div class="footer-hearts">♥ ♥ ♥</div>
+    <br>
+    <span data-en="We can't wait to celebrate with you! Any questions? Contact us." data-lt="Laukiame jūsų! Klausimų? Susisiekite su mumis." data-fi="Odotamme innolla juhlimista kanssanne! Kysymyksiä? Ota yhteyttä.">We can't wait to celebrate with you! Any questions? Contact us.</span><br>
+    <a href="/cdn-cgi/l/email-protection#a0d9cfd5d2e0c5cdc1c9cc8ec3cfcd" style="color:var(--rose); font-weight:700; text-decoration:none;" id="contactEmail"><span class="__cf_email__" data-cfemail="1b62746e695b7e767a727735787476">[email&#160;protected]</span></a>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ===== GUEST LIST =====
+// Add guest first names here (case-insensitive)
+// EXAMPLE: const GUESTS = ["Anna","Matti","Jonas","Laima","Erika","Pekka"];
+const GUESTS = [
+  "Anna","Matti","Jonas","Laima","Erika","Pekka",
+  "Maria","Tomas","Laura","Mikael","Rasa","Jurgis",
+  "Sofia","Henrik","Neringa","Andrius"
+  // ← Add your actual guest first names here
+];
+
+// ===== EVENT DATE =====
+// Set your event date here: new Date('YYYY-MM-DDTHH:MM:00')
+const EVENT_DATE = new Date('2025-09-06T12:00:00');
+
+// ===== LANGUAGE =====
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+  // Update all text nodes
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const txt = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+    el.innerHTML = txt;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-ph-en]').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en');
+  });
+
+  // Update gate error if visible
+  const err = document.getElementById('gateError');
+  if(err.classList.contains('show')) {
+    err.textContent = err.getAttribute('data-' + lang) || err.getAttribute('data-en');
+  }
+
+  // Update section titles with inner HTML
+  document.querySelectorAll('.section-title[data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+  });
+}
+
+// ===== NAME GATE =====
+function checkName() {
+  const input = document.getElementById('nameInput').value.trim();
+  const normalized = input.toLowerCase();
+  const found = GUESTS.some(g => g.toLowerCase() === normalized);
+  const err = document.getElementById('gateError');
+
+  if (found) {
+    document.getElementById('nameGate').style.display = 'none';
+    const form = document.getElementById('rsvpForm');
+    form.classList.add('show');
+    const welcomeMsgs = {
+      en: `Welcome, ${input}! 🌸`,
+      lt: `Sveiki, ${input}! 🌸`,
+      fi: `Tervetuloa, ${input}! 🌸`
+    };
+    document.getElementById('rsvpWelcome').textContent = welcomeMsgs[currentLang] || welcomeMsgs.en;
+    err.classList.remove('show');
+  } else {
+    err.classList.add('show');
+    const errMsg = {
+      en: 'Name not found. Please check your name or contact us.',
+      lt: 'Vardas nerastas. Patikrinkite vardą arba susisiekite su mumis.',
+      fi: 'Nimeä ei löydy. Tarkista nimesi tai ota yhteyttä.'
+    };
+    err.textContent = errMsg[currentLang] || errMsg.en;
+    document.getElementById('nameInput').style.borderColor = '#e0607a';
+    setTimeout(() => { document.getElementById('nameInput').style.borderColor = ''; }, 1500);
+  }
+}
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const now = new Date();
+  const diff = EVENT_DATE - now;
+  if (diff <= 0) {
+    document.getElementById('cd-d').textContent = '🎉';
+    document.getElementById('cd-h').textContent = '🎂';
+    document.getElementById('cd-m').textContent = '🌸';
+    return;
+  }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  do
