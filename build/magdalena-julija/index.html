@@ -1034,6 +1034,16 @@
           <div class="quiz-score" id="quizScore">0/3</div>
           <div class="quiz-score-text" id="quizScoreText"></div>
         </div>
+
+        <!-- Quiz submit button — shown after all 3 questions answered -->
+        <div class="rsvp-submit-wrap" id="quizSubmitWrap" style="display:none; margin-top:20px;">
+          <button class="btn-submit" id="quizSubmitBtn" onclick="submitQuiz()"
+            style="background: linear-gradient(135deg, var(--sage), #7dbf95);"
+            data-en="Save my quiz answers 🌿" data-lt="Išsaugoti viktorinos atsakymus 🌿" data-fi="Tallenna visausvastaukset 🌿">
+            Save my quiz answers 🌿
+          </button>
+          <div class="rsvp-status" id="quizStatus"></div>
+        </div>
       </div>
 
 
@@ -1056,22 +1066,17 @@
       <div class="travel-card">
         <div class="travel-card-icon">✈️</div>
         <div class="travel-card-title" data-en="Getting There" data-lt="Kaip atvykti" data-fi="Matka perille">Getting There</div>
-        <div class="travel-card-text" data-en="Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair, Ryanair." data-lt="Tiesioginiai skrydžiai iš Helsinkio (HEL) į Vilnių (VNO) ~1,5 val." data-fi="Suorat lennot Helsingistä (HEL) Vilnaan (VNO) ~1,5h. Lennot: Finnair, Ryanair.">Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair, Ryanair.</div>
+        <div class="travel-card-text" data-en="Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair." data-lt="Tiesioginiai skrydžiai iš Helsinkio (HEL) į Vilnių (VNO) ~1,5 val." data-fi="Suorat lennot Helsingistä (HEL) Vilnaan (VNO) ~1,5h. Lennot: Finnair.">Direct flights from Helsinki (HEL) to Vilnius (VNO) ~1.5h. Airlines: Finnair.</div>
       </div>
       <div class="travel-card">
         <div class="travel-card-icon">🏨</div>
         <div class="travel-card-title" data-en="Accommodation" data-lt="Nakvynė" data-fi="Majoitus">Accommodation</div>
-        <div class="travel-card-text" data-en="Recommended: Stikliai Hotel, Artagonist Hotel, or Airbnb in Vilnius Old Town." data-lt="Rekomenduojame: Stikliai Hotel, Artagonist arba Airbnb senamiestis." data-fi="Suosittelemme: Stikliai Hotel, Artagonist Hotel tai Airbnb Vilnan vanhassa kaupungissa.">Recommended: Stikliai Hotel, Artagonist Hotel, or Airbnb in Vilnius Old Town.</div>
+        <div class="travel-card-text" data-en="Recommended: Airbnb in Vilnius Old Town." data-lt="Rekomenduojame: Airbnb senamiestis." data-fi="Suosittelemme: Airbnb Vilnan vanhassa kaupungissa.">Recommended: Airbnb in Vilnius Old Town.</div>
       </div>
       <div class="travel-card">
         <div class="travel-card-icon">🚗</div>
         <div class="travel-card-title" data-en="Getting Around" data-lt="Susisiekimas" data-fi="Liikkuminen">Getting Around</div>
         <div class="travel-card-text" data-en="Bolt & Uber work great in Vilnius. Car rental also available at the airport." data-lt="Bolt ir Uber puikiai veikia Vilniuje. Automobilių nuoma oro uoste." data-fi="Bolt ja Uber toimivat hyvin Vilnassa. Autonvuokraus lentokentältä.">Bolt & Uber work great in Vilnius. Car rental also available at the airport.</div>
-      </div>
-      <div class="travel-card">
-        <div class="travel-card-icon">💶</div>
-        <div class="travel-card-title" data-en="Currency" data-lt="Valiuta" data-fi="Valuutta">Currency</div>
-        <div class="travel-card-text" data-en="Lithuania uses Euro (€). Cards accepted almost everywhere. ATMs widely available." data-lt="Lietuva naudoja eurą (€). Kortelės priimamos beveik visur." data-fi="Liettua käyttää euroa (€). Kortit hyväksytään lähes kaikkialla.">Lithuania uses Euro (€). Cards accepted almost everywhere. ATMs widely available.</div>
       </div>
     </div>
   </div>
@@ -1261,6 +1266,56 @@ function showQuizResult() {
   };
   const m = msgs[score];
   document.getElementById('quizScoreText').textContent = (m[currentLang] || m.en);
+
+  // Show the quiz save button only if RSVP has already been submitted
+  // (i.e. the saved banner is visible, meaning we have a record to update)
+  if (document.getElementById('rsvpSavedBanner').classList.contains('show')) {
+    document.getElementById('quizSubmitWrap').style.display = 'block';
+  }
+}
+
+// ===== SUBMIT QUIZ (separate save after RSVP already sent) =====
+async function submitQuiz() {
+  if (!verifiedName) return;
+  const btn = document.getElementById('quizSubmitBtn');
+  const quizScore = [1,2,3].filter(q => quizAnswers[q] === QUIZ_CORRECT[q]).length;
+  const nowEET = new Date().toLocaleString('lt-LT', { timeZone: 'Europe/Vilnius', hour12: false });
+
+  // We send the full payload so the Apps Script upsert keeps all existing fields intact
+  const payload = {
+    action:      'set',
+    name:        verifiedName,
+    attending:   attendingVal || 'yes',
+    guests:      document.getElementById('guestCount').value || '1',
+    message:     document.getElementById('guestMessage').value.trim(),
+    lang:        currentLang,
+    quizScore:   `${quizScore}/3`,
+    quizAnswers: JSON.stringify(quizAnswers),
+    timestamp:   nowEET + ' EET'
+  };
+
+  btn.disabled = true;
+  const statusEl = document.getElementById('quizStatus');
+  statusEl.className = 'rsvp-status loading';
+  statusEl.textContent = { en: 'Saving… 🌿', lt: 'Išsaugoma… 🌿', fi: 'Tallennetaan… 🌿' }[currentLang];
+
+  try {
+    const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (data.success) {
+      statusEl.className = 'rsvp-status success';
+      statusEl.textContent = {
+        en: '🌿 Quiz saved! Thanks for playing.',
+        lt: '🌿 Viktorina išsaugota! Ačiū už dalyvavimą.',
+        fi: '🌿 Visa tallennettu! Kiitos osallistumisesta.'
+      }[currentLang];
+      btn.style.display = 'none';
+    } else { throw new Error(data.error || 'Unknown'); }
+  } catch(e) {
+    statusEl.className = 'rsvp-status error';
+    statusEl.textContent = { en: '⚠️ Could not save. Please try again.', lt: '⚠️ Nepavyko išsaugoti. Bandykite dar.', fi: '⚠️ Tallennus epäonnistui. Yritä uudelleen.' }[currentLang];
+    btn.disabled = false;
+  }
 }
 
 // ===== SUBMIT RSVP =====
@@ -1303,6 +1358,10 @@ async function submitRSVP() {
         fi: `🎉 Kiitos, ${verifiedName}! RSVP:si on tallennettu.`
       }[currentLang]);
       document.getElementById('rsvpSavedBanner').classList.add('show');
+      // If quiz was already completed, show the quiz save button
+      if (quizLocked) {
+        document.getElementById('quizSubmitWrap').style.display = 'block';
+      }
     } else { throw new Error(data.error || 'Unknown error'); }
   } catch(e) {
     showStatus('error', {
