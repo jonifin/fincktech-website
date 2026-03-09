@@ -518,6 +518,28 @@
   }
   .rsvp-textarea:focus { border-color: var(--rose); }
 
+  /* Loading spinner */
+  .rsvp-loading {
+    display: none;
+    text-align: center;
+    padding: 28px 0 12px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .rsvp-loading.show { display: block; }
+  .spinner {
+    display: inline-block;
+    width: 32px; height: 32px;
+    border: 3px solid var(--blush);
+    border-top-color: var(--rose);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-bottom: 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .rsvp-fields.loading-blur { opacity: 0.35; pointer-events: none; }
+
   /* Submit */
   .rsvp-submit-wrap { text-align: center; margin-top: 24px; }
   .btn-submit {
@@ -906,7 +928,13 @@
         </span>
       </div>
 
-      <div class="rsvp-fields">
+      <!-- Loading spinner while fetching previous response -->
+      <div class="rsvp-loading" id="rsvpLoading">
+        <div class="spinner"></div><br>
+        <span data-en="Looking up your response…" data-lt="Ieškome jūsų atsakymo…" data-fi="Haetaan vastaustasi…">Looking up your response…</span>
+      </div>
+
+      <div class="rsvp-fields" id="rsvpFields">
 
         <!-- Attending -->
         <div class="rsvp-field-group">
@@ -1178,6 +1206,12 @@ function checkName() {
 // ===== LOAD EXISTING RESPONSE =====
 async function loadExistingResponse(name) {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+
+  const spinner = document.getElementById('rsvpLoading');
+  const fields  = document.getElementById('rsvpFields');
+  spinner.classList.add('show');
+  fields.classList.add('loading-blur');
+
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=get&name=${encodeURIComponent(name)}`);
     const data = await res.json();
@@ -1196,6 +1230,10 @@ async function loadExistingResponse(name) {
       // If no quiz answers saved yet, leave quiz open and save button hidden until they answer
     }
   } catch(e) { /* silent */ }
+  finally {
+    spinner.classList.remove('show');
+    fields.classList.remove('loading-blur');
+  }
 }
 
 // ===== ATTENDING TOGGLE =====
